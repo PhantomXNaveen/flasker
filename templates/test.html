@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{%block content %}
+
+<p id = 'demo'>Page Not Found</p> 
+
+
+<h1>Hello, Flask!</h1>
+<script src="{{ url_for('static', filename='js/myfile.js') }}"></script>
+<script src="{{ url_for('static', filename='js/new.js') }}"></script>
+
+{% endblock %}

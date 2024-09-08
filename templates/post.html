@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{%block content %}
+
+{% for message in get_flashed_messages() %}
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		 {{name}} - {{message}}	
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>	
+{% endfor %}
+
+
+<br>
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+	<h2>{{post.title}}</h2><br>
+	<small>{{post.poster.name}}</small><br>
+	{{post.date_posted}}   ---	{{post.slug}}<br>	
+	{{post.content |safe }}<br>
+
+<div clas="card mb-3">
+	<div class="row no-gutters">
+		<div class="col-md-2">
+			{% if post.poster.profile_pic %}
+				<img src="{{ url_for('static',filename='images/' + post.poster.profile_pic) }}" width="150" align="left">
+			{% else %}
+				<img src="{{ url_for('static',filename='images/icons8-profile-48.png') }}" width="150" align="left">
+					
+			{% endif %}	
+		</div>
+	<div class="col-md-10">
+		<div class="card-body">
+			<h5 class="card-title">{{ post.poster.name }}</h5>
+			<p class="card-text">					
+				{% if post.poster.about_author %}
+					{{post.poster.about_author}}<br>
+				{% else %}
+					Author has no about profile yet ...	
+				{% endif %}
+			</p>	
+		</div>	
+	</div>
+</div>
+</div>
+</div>
+{% if current_user.id==post.poster.id %}
+
+	<a href="{{url_for('delete_post',id=post.id)}}" class="btn btn-outline-danger btn-small">Delete Post</a>
+	<a href="{{url_for('edit_post',id=post.id)}}" class="btn btn-outline-secondary btn-small">Edit Post</a>	
+{% endif %}
+
+<a href="{{ url_for('posts')}}" class="btn btn-outline-secondary btn-small">Back To Blog</a>
+
+	
+
+{% endblock %}
